@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ArrowDownUp,
@@ -249,7 +248,12 @@ function Lab() {
       </a>
       <Sidebar className="atlas-sidebar">
         <SidebarHeader className="brand-header">
-          <Link href="/" className="brand" aria-label="Algo Atlas home">
+          <button
+            type="button"
+            className="brand"
+            aria-label="Algo Atlas home"
+            onClick={() => selectLesson('bubble')}
+          >
             <span className="brand-mark">
               <Braces size={23} strokeWidth={2.4} />
             </span>
@@ -257,7 +261,7 @@ function Lab() {
               algo<span className="brand-light">atlas</span>
               <small>C++ IN MOTION</small>
             </span>
-          </Link>
+          </button>
         </SidebarHeader>
         <SidebarContent>
           <div className="library-label">

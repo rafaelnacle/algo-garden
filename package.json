@@ -13,7 +13,9 @@
     "format": "oxfmt",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
-    "test:cpp": "node --experimental-strip-types tests/check-cpp.ts"
+    "test:cpp": "node --experimental-strip-types tests/check-cpp.ts",
+    "build:pages": "node scripts/build-pages.mjs",
+    "preview:pages": "vite preview --config vite.pages.config.ts"
   },
   "dependencies": {
     "react": "19.2.6",
