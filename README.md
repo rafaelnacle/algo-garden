@@ -60,57 +60,18 @@ Keyboard shortcuts work when focus is outside an input or interactive control:
 
 Lesson progress is stored only in this browser's `localStorage`. It is not synced between devices. If browser storage is unavailable, progress remains available for the current session. Quiz answers are session-only.
 
-## GitHub Pages
-
-The project includes a separate, browser-only Vite build for GitHub Pages. It reuses the same React lab and needs no Cloudflare Worker or server. The existing `npm run dev`, `npm run build`, and `npm start` workflow remains available.
-
-Build for a project site such as `https://OWNER.github.io/REPOSITORY/`:
-
-```bash
-npm run build:pages -- --base-path /REPOSITORY
-npm run preview:pages -- --base /REPOSITORY/
-```
-
-Open the URL printed by the preview server, normally `http://localhost:4173/REPOSITORY/`. Replace `REPOSITORY` with the exact, case-sensitive repository name.
-
-For a root site (`OWNER.github.io`) or a custom domain served at its root:
-
-```bash
-npm run build:pages
-npm run preview:pages
-```
-
-The publishable files are in **`dist/pages/`**. The build checks that the HTML references existing JavaScript, CSS, and favicon files under the correct base path. It also creates `.nojekyll`. Do not publish the whole repository or the entire `dist/` directory.
-
-### Publish when ready
-
-The workflow is **manual only**: pushing commits does not publish the site.
-
-1. Push the prepared commits to the repository's default branch when you choose.
-2. In the repository, open **Settings → Pages → Build and deployment** and select **GitHub Actions** as the source.
-3. Open **Actions → Deploy GitHub Pages → Run workflow**, select the default branch, and run it.
-4. Wait for the build and deployment jobs to finish. The deployed URL appears in the deployment environment and under **Settings → Pages**.
-
-The workflow reads the base path from GitHub's Pages configuration, so repository sites, root sites, and configured custom domains use the appropriate asset paths automatically. It runs TypeScript, lint, algorithm tests, and C++ compilation checks before uploading only `dist/pages/`. Deployment is restricted to the default branch and uses GitHub's temporary credentials; no personal access token or API key needs to be added.
-
-Future updates follow the same process: push when ready, then manually run **Deploy GitHub Pages**. For custom domains, configure the domain and DNS in GitHub Pages first, then run the workflow again so the build uses the updated base path.
-
-The workflow has been prepared locally; a successful local build does not mean it has already been published. See [GitHub's custom Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) for repository settings and deployment requirements.
-
 ## Development commands
 
-| Command                 | Purpose                                                                   |
-| ----------------------- | ------------------------------------------------------------------------- |
-| `npm run dev`           | Start the development server with hot reload                              |
-| `npm run build:pages`   | Build and verify static GitHub Pages files in `dist/pages/`               |
-| `npm run preview:pages` | Preview the static Pages build locally                                    |
-| `npm run build`         | Create the production build in `dist/`                                    |
-| `npm start`             | Serve the built application locally through Wrangler; run the build first |
-| `npm run typecheck`     | Check TypeScript without emitting files                                   |
-| `npm run lint`          | Check application code with Oxlint                                        |
-| `npm test`              | Run algorithm and lesson regression tests                                 |
-| `npm run test:cpp`      | Compile all 16 C++ examples and run behavior assertions                   |
-| `npm run format`        | Format project files with Oxfmt                                           |
+| Command             | Purpose                                                                   |
+| ------------------- | ------------------------------------------------------------------------- |
+| `npm run dev`       | Start the development server with hot reload                              |
+| `npm run build`     | Create the production build in `dist/`                                    |
+| `npm start`         | Serve the built application locally through Wrangler; run the build first |
+| `npm run typecheck` | Check TypeScript without emitting files                                   |
+| `npm run lint`      | Check application code with Oxlint                                        |
+| `npm test`          | Run algorithm and lesson regression tests                                 |
+| `npm run test:cpp`  | Compile all 16 C++ examples and run behavior assertions                   |
+| `npm run format`    | Format project files with Oxfmt                                           |
 
 The TypeScript tests cover sorting edge cases, duplicates, negative values, search misses, graph paths for all start/goal pairs, A* heuristic consistency, structure operations, input validation, and code highlights. The C++ checks compile each example independently with `-std=c++17 -Wall -Wextra -Werror`, then compile and execute a small test program. Temporary compiler files are cleaned up after the checks.
 
@@ -119,10 +80,6 @@ Lint excludes the scaffold's vendored `components/ui` files and its `use-mobile`
 ## Project structure
 
 ```text
-.github/workflows/pages.yml  Manual GitHub Pages build and deployment
-static/                     Static HTML and React entry for GitHub Pages
-scripts/                    Pages build and artifact verification
-vite.pages.config.ts        Browser-only Vite configuration
 app/
   page.tsx                  Lab UI, inputs, playback, quiz, and progress state
   layout.tsx                Document layout and metadata
@@ -160,8 +117,6 @@ Algorithm traces run in TypeScript in the browser. The displayed C++ is educatio
 
 To add a lesson, extend `AlgorithmId`, add the lesson and C++ source, implement its trace and any new diagram, then add algorithm tests and a C++ behavior check.
 
-## Privacy and version control
+## Privacy
 
 The learning features do not require private data or credentials. Keep credentials out of source code, public assets, screenshots, and commits. `.gitignore` excludes environment files, common credential files, dependencies, build output, and machine-local agent state; it is still important to review staged changes.
-
-Use local commits as version checkpoints. Pushing or publishing is a separate, deliberate step; none of the normal development or test commands performs either action.
