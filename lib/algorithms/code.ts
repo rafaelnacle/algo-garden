@@ -178,10 +178,6 @@ double astar(const std::vector<std::vector<Edge>>& g, int start,
   return std::numeric_limits<double>::infinity();
 }`,
   stack: `#include <stack>
-std::stack<int> makeStack(const std::vector<int>& input) = delete;`,
-  queue: '', linked: '', tree: '', hash: '',
-};
-code.stack = `#include <stack>
 #include <vector>
 std::stack<int> stackDemo(const std::vector<int>& input) {
   std::stack<int> s;
@@ -192,8 +188,8 @@ std::stack<int> stackDemo(const std::vector<int>& input) {
     (void)removed;
   }
   return s;
-}`;
-code.queue = `#include <queue>
+}`,
+  queue: `#include <queue>
 #include <vector>
 std::queue<int> queueDemo(const std::vector<int>& input) {
   std::queue<int> q;
@@ -204,8 +200,8 @@ std::queue<int> queueDemo(const std::vector<int>& input) {
     (void)removed;
   }
   return q;
-}`;
-code.linked = `#include <memory>
+}`,
+  linked: `#include <memory>
 struct Node { int value; std::unique_ptr<Node> next; };
 void append(std::unique_ptr<Node>& head, int value) {
   auto node = std::make_unique<Node>(Node{value, nullptr});
@@ -219,8 +215,8 @@ void popFront(std::unique_ptr<Node>& head) {
     auto next = std::move(head->next);
     head = std::move(next); // Old head is destroyed automatically.
   }
-}`;
-code.tree = `#include <memory>
+}`,
+  tree: `#include <memory>
 #include <vector>
 struct Node { int value; std::unique_ptr<Node> left, right; };
 void insert(std::unique_ptr<Node>& root, int value) {
@@ -233,8 +229,8 @@ void inorder(const std::unique_ptr<Node>& root, std::vector<int>& out) {
   inorder(root->left, out);
   out.push_back(root->value);
   inorder(root->right, out);
-}`;
-code.hash = `#include <array>
+}`,
+  hash: `#include <array>
 #include <vector>
 #include <algorithm>
 class HashTable {
@@ -247,4 +243,5 @@ public:
     return std::find(chain.begin(), chain.end(), key) != chain.end();
   }
 }; // Teaching multiset: fixed bucket count, duplicates allowed.
-// Production: consider std::unordered_set or std::unordered_map.`;
+// Production: consider std::unordered_set or std::unordered_map.`,
+} as const;

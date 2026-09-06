@@ -1,5 +1,21 @@
 export type Category = 'Sorting' | 'Searching' | 'Graphs' | 'Data structures';
-export type AlgorithmId = 'bubble' | 'selection' | 'insertion' | 'merge' | 'quick' | 'linear' | 'binary' | 'bfs' | 'dfs' | 'dijkstra' | 'astar' | 'stack' | 'queue' | 'linked' | 'tree' | 'hash';
+export type AlgorithmId =
+  | 'bubble'
+  | 'selection'
+  | 'insertion'
+  | 'merge'
+  | 'quick'
+  | 'linear'
+  | 'binary'
+  | 'bfs'
+  | 'dfs'
+  | 'dijkstra'
+  | 'astar'
+  | 'stack'
+  | 'queue'
+  | 'linked'
+  | 'tree'
+  | 'hash';
 export interface Lesson {
   id: AlgorithmId;
   name: string;
@@ -32,14 +48,28 @@ export interface TraceStep {
   edges?: [number, number][];
   labels?: string[];
 }
-export interface GraphNode { name: string; x: number; y: number }
+export interface GraphNode {
+  name: string;
+  x: number;
+  y: number;
+}
 export const graphNodes: GraphNode[] = [
-  { name: 'A', x: 65, y: 170 }, { name: 'B', x: 205, y: 65 },
-  { name: 'C', x: 205, y: 275 }, { name: 'D', x: 365, y: 105 },
-  { name: 'E', x: 365, y: 260 }, { name: 'F', x: 520, y: 170 },
+  { name: 'A', x: 65, y: 170 },
+  { name: 'B', x: 205, y: 65 },
+  { name: 'C', x: 205, y: 275 },
+  { name: 'D', x: 365, y: 105 },
+  { name: 'E', x: 365, y: 260 },
+  { name: 'F', x: 520, y: 170 },
 ];
-// Integer edge costs dominate Euclidean distance / 100: A*'s heuristic is consistent.
+// Integer edge costs dominate Euclidean distance / 200: A*'s heuristic is consistent.
 export const graphEdges: [number, number, number][] = [
-  [0, 1, 4], [0, 2, 2], [1, 2, 2], [1, 3, 5],
-  [2, 3, 3], [2, 4, 6], [3, 4, 1], [3, 5, 5], [4, 5, 2],
+  [0, 1, 4],
+  [0, 2, 2],
+  [1, 2, 2],
+  [1, 3, 5],
+  [2, 3, 3],
+  [2, 4, 6],
+  [3, 4, 1],
+  [3, 5, 5],
+  [4, 5, 2],
 ];
