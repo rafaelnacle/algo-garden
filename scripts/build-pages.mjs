@@ -17,12 +17,7 @@ if (basePath !== '' && !/^\/(?!\.{1,2}$)[A-Za-z0-9._-]+$/.test(basePath)) {
 
 const build = spawnSync(
   process.execPath,
-  [
-    'node_modules/vite/bin/vite.js',
-    'build',
-    '--config',
-    'vite.pages.config.ts',
-  ],
+  ['node_modules/vite/bin/vite.js', 'build', '--config', 'vite.config.ts'],
   {
     stdio: 'inherit',
     env: { ...process.env, PAGES_BASE_PATH: basePath },

@@ -13,7 +13,7 @@ export const lessons: Lesson[] = [
     idea: 'Compare neighboring values and swap them when the left one is larger. With each pass, the largest remaining value bubbles to the right.',
     tricky:
       'Why j < end? The comparison reads a[j + 1], so j must stop one position before end. The values beyond end are already in their final positions. A pass with no swaps proves the whole array is sorted.',
-    use: 'A clear first look at comparisons, swaps, and loop invariants. For large real-world arrays, prefer std::sort.',
+    use: 'A clear first look at comparisons, swaps, and loop invariants. For large real-world arrays, prefer a standard library sort.',
     complexity:
       'Average and worst time: O(n²). Best time: O(n) with the early-exit flag. Extra space: O(1). Stable because equal neighbors are never swapped.',
     code: code.bubble,
@@ -151,7 +151,7 @@ export const lessons: Lesson[] = [
     ],
     correct: 2,
     explanation:
-      'C++ arrays use zero-based indexing. A return value of 0 is a valid match; −1 indicates absence.',
+      'Both examples use zero-based indexing. A return value of 0 is a valid match; −1 indicates absence.',
   },
   {
     id: 'binary',
@@ -164,7 +164,7 @@ export const lessons: Lesson[] = [
     idea: 'On sorted input, compare the middle value with the target. Discard the half that cannot contain the target and repeat on the remaining interval.',
     tricky:
       'This version uses inclusive bounds and lo <= hi. Move to mid + 1 or mid − 1, because mid has already been checked. lo + (hi − lo)/2 avoids overflow from adding the two bounds. The lab sorts input before the trace.',
-    use: 'Fast lookups in sorted arrays and monotonic decision problems. C++ also provides std::lower_bound.',
+    use: 'Fast lookups in sorted arrays and monotonic decision problems. Standard libraries also provide optimized binary-search helpers.',
     complexity:
       'Best time: O(1). Worst time: O(log n), with O(1) extra space. Sorting the input first costs additional time, which is not counted in the search trace. With duplicates, any matching index may be returned.',
     code: code.binary,
@@ -188,7 +188,7 @@ export const lessons: Lesson[] = [
       'Mark nodes discovered when enqueuing, not when removing them, to avoid adding them repeatedly. BFS minimizes edge count, not weighted cost. The diagram’s weights are deliberately ignored here.',
     use: 'Shortest paths in unweighted graphs, degrees of separation, and level-order exploration.',
     complexity:
-      'Worst time: O(V + E) with adjacency lists. Auxiliary space: O(V). The teaching renderer scans a small edge list; the C++ implementation uses adjacency lists.',
+      'Worst time: O(V + E) with adjacency lists. Auxiliary space: O(V). The teaching renderer scans a small edge list; the displayed implementations use adjacency lists.',
     code: code.bfs,
     question: 'Does BFS always find the cheapest route on a weighted graph?',
     answers: [
@@ -235,7 +235,7 @@ export const lessons: Lesson[] = [
     difficulty: 'Intermediate',
     idea: 'Expand the node with the smallest known distance. Relax its outgoing edges: if going through this node is cheaper, update the neighbor’s distance.',
     tricky:
-      'All weights must be nonnegative. A C++ priority_queue is a max-heap by default; std::greater makes it a min-heap. Improved distances leave old entries in the queue, so skip entries whose cost is stale. The diagram also tracks parents to display the route.',
+      'All weights must be nonnegative. The examples use a min-priority queue; in C++, std::greater reverses priority_queue’s max-heap default, while Python uses heapq. Improved distances leave old entries in the queue, so skip entries whose cost is stale.',
     use: 'Shortest routes on graphs with nonnegative travel costs, network latency, or movement costs.',
     complexity:
       'For simple graphs with adjacency lists and a binary heap: O((V + E) log V) time. Lazy queue entries take O(V + E) auxiliary space. The small teaching trace orders an array frontier for readability.',
@@ -378,7 +378,7 @@ export const lessons: Lesson[] = [
     difficulty: 'Intermediate',
     idea: 'Hash each key into one of five buckets. Keys that share a bucket are stored in a chain. The demo allows duplicates, like a small multiset.',
     tricky:
-      'Collisions are normal: different keys can have the same hash. Always compare the actual key in the bucket. In C++, a negative remainder stays negative, so (key % 5 + 5) % 5 normalizes the bucket index.',
+      'Collisions are normal: different keys can have the same hash. Always compare the actual key in the bucket. C++ needs explicit normalization for negative remainders; Python’s modulo already produces the nonnegative bucket used here.',
     use: 'Fast key-based membership checks and maps. Production unordered containers resize their bucket arrays as they grow.',
     complexity:
       'Expected lookup is O(1 + n/B) with uniform hashing; O(1) needs a bounded load factor n/B. This fixed five-bucket example does not resize, so lookup tends toward O(n) as it grows. Insert is amortized O(1); worst-case vector growth is O(n). Storage: O(n + B).',

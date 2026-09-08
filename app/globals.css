@@ -429,6 +429,18 @@ h1 {
 .meta-last {
   margin-left: auto;
 }
+.meta-last label {
+  color: #919c86;
+}
+.meta-last select {
+  min-width: 104px;
+  height: 30px;
+  border-color: #3c4e2b;
+  background: #1b2117;
+  color: #c6cebc;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
 .lab-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);

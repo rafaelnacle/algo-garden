@@ -56,6 +56,7 @@ import {
   type AlgorithmId,
   type Category,
   type Lesson,
+  type ProgrammingLanguage,
 } from '@/lib/algorithms/types';
 import { useLabTools } from '@/lib/use-lab-tools';
 
@@ -91,6 +92,7 @@ function Lab() {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
+  const [language, setLanguage] = useState<ProgrammingLanguage>('cpp');
   const [tab, setTab] = useState('intuition');
   const [answers, setAnswers] = useState<Partial<Record<AlgorithmId, number>>>(
     {},
@@ -259,7 +261,7 @@ function Lab() {
             </span>
             <span>
               algo<span className="brand-light">atlas</span>
-              <small>C++ IN MOTION</small>
+              <small>ALGORITHMS IN MOTION</small>
             </span>
           </button>
         </SidebarHeader>
@@ -392,7 +394,18 @@ function Lab() {
             </span>
             <span className="meta-last">
               <Terminal size={14} />
-              C++17
+              <label htmlFor="code-language">Code</label>
+              <NativeSelect
+                id="code-language"
+                value={language}
+                onChange={(event) =>
+                  setLanguage(event.target.value as ProgrammingLanguage)
+                }
+                aria-label="Programming language"
+              >
+                <NativeSelectOption value="cpp">C++17</NativeSelectOption>
+                <NativeSelectOption value="python">Python 3</NativeSelectOption>
+              </NativeSelect>
             </span>
           </div>
           <div className="lab-grid">
@@ -548,7 +561,7 @@ function Lab() {
                 </span>
               </div>
             </section>
-            <CodePanel lesson={lesson} line={step.line} />
+            <CodePanel lesson={lesson} line={step.line} language={language} />
           </div>
           <section className="input-panel" aria-label="Experiment inputs">
             <div className="input-title">
@@ -720,9 +733,9 @@ function Lab() {
                     </div>
                     <p className="notation-note">
                       n = input size · V = vertices · E = edges · h = tree
-                      height · B = buckets. Bounds describe the C++
-                      implementation; the visualization stores extra snapshots
-                      for rewinding.
+                      height · B = buckets. Bounds describe the displayed
+                      algorithm; the visualization stores extra snapshots for
+                      rewinding.
                     </p>
                   </div>
                 </TabsContent>

@@ -1,36 +1,32 @@
-# GitHub Pages — maintainer notes
+# GitHub Pages deployment
 
-The project includes a separate, browser-only Vite build for GitHub Pages. It reuses the same React lab and needs no Cloudflare Worker or server. The existing `npm run dev`, `npm run build`, and `npm start` workflow remains available.
+Algo Atlas is built as a static Vite application and published with the workflow in `.github/workflows/pages.yml`.
 
-Build for a project site such as `https://OWNER.github.io/REPOSITORY/`:
+## Preview a repository site locally
 
-```bash
-npm run build:pages -- --base-path /REPOSITORY
-npm run preview:pages -- --base /REPOSITORY/
-```
-
-Open the URL printed by the preview server, normally `http://localhost:4173/REPOSITORY/`. Replace `REPOSITORY` with the exact, case-sensitive repository name.
-
-For a root site (`OWNER.github.io`) or a custom domain served at its root:
+For a project URL such as `https://OWNER.github.io/REPOSITORY/`, build with the repository name as the base path:
 
 ```bash
-npm run build:pages
-npm run preview:pages
+npm run build -- --base-path /REPOSITORY
+npm run preview -- --base /REPOSITORY/
 ```
 
-The publishable files are in **`dist/pages/`**. The build checks that the HTML references existing JavaScript, CSS, and favicon files under the correct base path. It also creates `.nojekyll`. Do not publish the whole repository or the entire `dist/` directory.
+Open the URL printed by Vite, normally `http://localhost:4173/REPOSITORY/`.
 
-### Publish when ready
+For a root Pages site or a custom domain served from its root:
 
-The workflow is **manual only**: pushing commits does not publish the site.
+```bash
+npm run build
+npm run preview
+```
 
-1. Push the prepared commits to the repository's default branch when you choose.
-2. In the repository, open **Settings → Pages → Build and deployment** and select **GitHub Actions** as the source.
-3. Open **Actions → Deploy GitHub Pages → Run workflow**, select the default branch, and run it.
-4. Wait for the build and deployment jobs to finish. The deployed URL appears in the deployment environment and under **Settings → Pages**.
+The publishable files are generated in `dist/pages/`. The build verifies asset paths and adds `.nojekyll`.
 
-The workflow reads the base path from GitHub's Pages configuration, so repository sites, root sites, and configured custom domains use the appropriate asset paths automatically. It runs TypeScript, lint, algorithm tests, and C++ compilation checks before uploading only `dist/pages/`. Deployment is restricted to the default branch and uses GitHub's temporary credentials; no personal access token or API key needs to be added.
+## Publish
 
-Future updates follow the same process: push when ready, then manually run **Deploy GitHub Pages**. For custom domains, configure the domain and DNS in GitHub Pages first, then run the workflow again so the build uses the updated base path.
+1. Push the desired commit to the repository's default branch.
+2. In **Settings → Pages → Build and deployment**, select **GitHub Actions**.
+3. Open **Actions → Deploy GitHub Pages → Run workflow**.
+4. Run the workflow from the default branch.
 
-The workflow has been prepared locally; a successful local build does not mean it has already been published. See [GitHub's custom Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) for repository settings and deployment requirements.
+The workflow checks types, lint, algorithms, C++ examples, and Python examples before publishing the static build. Pushing a commit alone does not deploy the site.

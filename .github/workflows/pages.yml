@@ -35,10 +35,11 @@ jobs:
           npm run typecheck
           npm run lint
 
-      - name: Test algorithms and C++ examples
+      - name: Test algorithms and code examples
         run: |
           npm test
           npm run test:cpp
+          npm run test:python
 
       - name: Read GitHub Pages configuration
         id: pages
