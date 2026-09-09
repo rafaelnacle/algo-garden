@@ -5,7 +5,6 @@ import {
   ArrowDownUp,
   ArrowLeft,
   ArrowRight,
-  Braces,
   Check,
   ChevronRight,
   CircleHelp,
@@ -21,6 +20,7 @@ import {
   SkipBack,
   SkipForward,
   Sparkles,
+  Sprout,
   Terminal,
   Timer,
   Waypoints,
@@ -121,7 +121,7 @@ function Lab() {
     const initialization = setTimeout(() => {
       try {
         const data: unknown = JSON.parse(
-          localStorage.getItem('algo-atlas-progress') || '[]',
+          localStorage.getItem('algo-garden-progress') || '[]',
         );
         if (Array.isArray(data))
           setSaved(
@@ -142,7 +142,7 @@ function Lab() {
   useEffect(() => {
     if (storageReady) {
       try {
-        localStorage.setItem('algo-atlas-progress', JSON.stringify(saved));
+        localStorage.setItem('algo-garden-progress', JSON.stringify(saved));
       } catch {
         /* Progress remains available for this session. */
       }
@@ -248,26 +248,26 @@ function Lab() {
       <a className="skip-link" href="#workspace">
         Skip to algorithm lab
       </a>
-      <Sidebar className="atlas-sidebar">
+      <Sidebar className="garden-sidebar">
         <SidebarHeader className="brand-header">
           <button
             type="button"
             className="brand"
-            aria-label="Algo Atlas home"
+            aria-label="AlgoGarden home"
             onClick={() => selectLesson('bubble')}
           >
             <span className="brand-mark">
-              <Braces size={23} strokeWidth={2.4} />
+              <Sprout size={23} strokeWidth={2.2} />
             </span>
             <span>
-              algo<span className="brand-light">atlas</span>
-              <small>ALGORITHMS IN MOTION</small>
+              algo<span className="brand-light">garden</span>
+              <small>WHERE LOGIC TAKES ROOT</small>
             </span>
           </button>
         </SidebarHeader>
         <SidebarContent>
           <div className="library-label">
-            <span>THE ALGORITHM LIBRARY</span>
+            <span>THE ALGORITHM GARDEN</span>
             <span>16</span>
           </div>
           <div className="nav-search">
@@ -798,7 +798,7 @@ function Lab() {
                 onClick={() => selectLesson(lessons[lessonIndex + 1].id)}
               >
                 {lessonIndex === lessons.length - 1
-                  ? 'End of the atlas'
+                  ? 'End of the garden'
                   : `Next: ${lessons[lessonIndex + 1].name}`}
                 <ArrowRight size={16} />
               </button>

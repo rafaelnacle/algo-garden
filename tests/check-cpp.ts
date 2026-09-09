@@ -34,7 +34,7 @@ const checks: Record<string, string> = {
   tree: 'std::unique_ptr<Node> r; for(int v:{3,1,4,3,2}) insert(r,v); std::vector<int> out; inorder(r,out); assert((out==std::vector<int>{1,2,3,3,4}));',
   hash: 'HashTable h; for(int v:{-4,1,6}) h.insert(v); assert(h.contains(-4)); assert(h.contains(6)); assert(!h.contains(11));',
 };
-const directory = mkdtempSync(join(tmpdir(), 'algo-atlas-cpp-'));
+const directory = mkdtempSync(join(tmpdir(), 'algo-garden-cpp-'));
 try {
   for (const lesson of lessons) {
     const source = join(directory, `${lesson.id}.cpp`),

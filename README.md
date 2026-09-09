@@ -1,6 +1,6 @@
-# Algo Atlas
+# AlgoGarden
 
-Algo Atlas is an interactive algorithms learning website built with React and TypeScript. It combines animated diagrams, step-by-step explanations, synchronized C++17 and Python 3 examples, and short practice questions.
+AlgoGarden is an interactive algorithms learning website built with React and TypeScript. It combines animated diagrams, step-by-step explanations, synchronized C++17 and Python 3 examples, and short practice questions.
 
 ## Lessons
 
@@ -53,7 +53,7 @@ Open the local URL printed by Vite, normally `http://localhost:5173`.
 
 ## Technology
 
-Algo Atlas uses React 19, TypeScript, Vite, Tailwind CSS, Base UI/shadcn primitives, and Lucide icons. It is a fully static application with no backend, database, account, or API key requirement.
+AlgoGarden uses React 19, TypeScript, Vite, Tailwind CSS, Base UI/shadcn primitives, and Lucide icons. It is a fully static application with no backend, database, account, or API key requirement.
 
 ## GitHub Pages
 

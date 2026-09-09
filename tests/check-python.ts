@@ -56,7 +56,7 @@ assert table.contains(-4) and table.contains(6)
 assert not table.contains(11)`,
 };
 
-const directory = mkdtempSync(join(tmpdir(), 'algo-atlas-python-'));
+const directory = mkdtempSync(join(tmpdir(), 'algo-garden-python-'));
 try {
   for (const [id, source] of Object.entries(pythonCode)) {
     const filename = join(directory, `${id}.py`);

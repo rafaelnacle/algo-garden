@@ -4,7 +4,7 @@ import Home from '../app/page';
 import '../app/globals.css';
 
 const root = document.getElementById('root');
-if (!root) throw new Error('The algorithm lab root element is missing.');
+if (!root) throw new Error('The AlgoGarden root element is missing.');
 
 createRoot(root).render(
   <StrictMode>

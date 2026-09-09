@@ -1,6 +1,6 @@
 # GitHub Pages deployment
 
-Algo Atlas is built as a static Vite application and published with the workflow in `.github/workflows/pages.yml`.
+AlgoGarden is built as a static Vite application and published with the workflow in `.github/workflows/pages.yml`.
 
 ## Preview a repository site locally
 
