@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createTrace, parseValues } from '../lib/algorithms/engine.ts';
 import { lessons } from '../lib/algorithms/lessons.ts';
+import { cCode, cLineFor } from '../lib/algorithms/c-code.ts';
 import { pythonCode, pythonLineFor } from '../lib/algorithms/python-code.ts';
 import {
   graphEdges,
@@ -202,6 +203,41 @@ void test('every trace step maps to a valid Python source line', () => {
       const line = pythonLineFor(lesson.id, frame.line);
       assert.ok(line >= 1 && line <= lines.length, `${lesson.id} line ${line}`);
     }
+  }
+});
+
+void test('every trace step maps to a valid C source line', () => {
+  for (const lesson of lessons) {
+    const lines = cCode[lesson.id].split('\n');
+    for (const frame of createTrace(lesson.id, [2, 1, 3])) {
+      const line = cLineFor(lesson.id, frame.line);
+      assert.ok(line >= 1 && line <= lines.length, `${lesson.id} line ${line}`);
+    }
+  }
+});
+
+void test('important operations highlight the corresponding C statement', () => {
+  const cases: [AlgorithmId, string, string][] = [
+    ['bubble', 'Compare ', 'if (a[j] > a[j + 1])'],
+    ['bubble', 'Swap the adjacent', 'int temp = a[j]'],
+    ['selection', 'Place the smallest', 'if (minimum != i)'],
+    ['merge', 'Write ', 'buffer[k++] ='],
+    ['quick', 'Pivot ', 'swap(&a[i], &a[hi])'],
+    ['binary', 'Found ', 'if (a[mid] == target)'],
+    ['dijkstra', 'Relax ', 'distance[edge.to] = next'],
+    ['astar', 'Relax ', 'distance[edge.to] = next'],
+  ];
+  for (const [id, prefix, statement] of cases) {
+    const lines = cCode[id].split('\n');
+    const frames = createTrace(id, [1, 3, 2], 3).filter((frame) =>
+      frame.message.startsWith(prefix),
+    );
+    assert.ok(frames.length > 0, `${id} produced the expected operation`);
+    for (const frame of frames)
+      assert.ok(
+        lines[cLineFor(id, frame.line) - 1].includes(statement),
+        `${id}: ${frame.message}`,
+      );
   }
 });
 
