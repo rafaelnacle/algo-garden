@@ -40,6 +40,7 @@ jobs:
           npm test
           npm run test:cpp
           npm run test:c
+          npm run test:go
           npm run test:python
 
       - name: Read GitHub Pages configuration
