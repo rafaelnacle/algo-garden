@@ -39,6 +39,7 @@ jobs:
         run: |
           npm test
           npm run test:cpp
+          npm run test:c
           npm run test:python
 
       - name: Read GitHub Pages configuration
