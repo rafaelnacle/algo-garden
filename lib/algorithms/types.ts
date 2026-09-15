@@ -1,5 +1,5 @@
 export type Category = 'Sorting' | 'Searching' | 'Graphs' | 'Data structures';
-export type ProgrammingLanguage = 'c' | 'cpp' | 'python';
+export type ProgrammingLanguage = 'c' | 'cpp' | 'go' | 'python';
 export type AlgorithmId =
   | 'bubble'
   | 'selection'

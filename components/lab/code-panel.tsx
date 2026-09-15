@@ -2,12 +2,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, Copy, FileCode2 } from 'lucide-react';
 import { cCode, cLineFor } from '@/lib/algorithms/c-code';
+import { goCode, goLineFor } from '@/lib/algorithms/go-code';
 import { pythonCode, pythonLineFor } from '@/lib/algorithms/python-code';
 import type { Lesson, ProgrammingLanguage } from '@/lib/algorithms/types';
 
 function highlight(line: string) {
   const tokens = line.split(
-    /(\/\/.*$|\/\*.*?\*\/|#(?:include|define)|#.*$|"[^"]*"|'[^']*'|\b(?:void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL)\b|\b\d+(?:\.\d+)?\b)/g,
+    /(\/\/.*$|\/\*.*?\*\/|#(?:include|define)|#.*$|"[^"]*"|'[^']*'|\b(?:void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|package|func|var|type|range|map|make|append|len|nil|float64|uint)\b|\b\d+(?:\.\d+)?\b)/g,
   );
   return tokens.map((token, i) => (
     <span
@@ -17,7 +18,7 @@ function highlight(line: string) {
           ? 'syntax-comment'
           : token.startsWith('"') || token.startsWith("'")
             ? 'syntax-string'
-            : /^(void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|#include|#define)$/.test(
+            : /^(void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|package|func|var|type|range|map|make|append|len|nil|float64|uint|#include|#define)$/.test(
                   token,
                 )
               ? 'syntax-keyword'
@@ -43,21 +44,41 @@ export function CodePanel({
   const [status, setStatus] = useState('');
   const highlighted = useRef<HTMLDivElement>(null);
   const scrollArea = useRef<HTMLDivElement>(null);
-  const source =
-    language === 'cpp'
-      ? lesson.code
-      : language === 'c'
-        ? cCode[lesson.id]
-        : pythonCode[lesson.id];
-  const activeLine =
-    language === 'cpp'
-      ? line
-      : language === 'c'
-        ? cLineFor(lesson.id, line)
-        : pythonLineFor(lesson.id, line);
-  const languageName =
-    language === 'cpp' ? 'C++17' : language === 'c' ? 'C11' : 'Python 3';
-  const extension = language === 'cpp' ? 'cpp' : language === 'c' ? 'c' : 'py';
+  const languageConfig: Record<
+    ProgrammingLanguage,
+    { source: string; activeLine: number; name: string; extension: string }
+  > = {
+    cpp: {
+      source: lesson.code,
+      activeLine: line,
+      name: 'C++17',
+      extension: 'cpp',
+    },
+    c: {
+      source: cCode[lesson.id],
+      activeLine: cLineFor(lesson.id, line),
+      name: 'C11',
+      extension: 'c',
+    },
+    go: {
+      source: goCode[lesson.id],
+      activeLine: goLineFor(lesson.id, line),
+      name: 'Go',
+      extension: 'go',
+    },
+    python: {
+      source: pythonCode[lesson.id],
+      activeLine: pythonLineFor(lesson.id, line),
+      name: 'Python 3',
+      extension: 'py',
+    },
+  };
+  const {
+    source,
+    activeLine,
+    name: languageName,
+    extension,
+  } = languageConfig[language];
   useEffect(() => {
     const row = highlighted.current,
       area = scrollArea.current;
