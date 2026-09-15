@@ -1,23 +1,23 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { Check, Copy, FileCode2 } from 'lucide-react';
+import { cCode, cLineFor } from '@/lib/algorithms/c-code';
 import { pythonCode, pythonLineFor } from '@/lib/algorithms/python-code';
 import type { Lesson, ProgrammingLanguage } from '@/lib/algorithms/types';
 
 function highlight(line: string) {
   const tokens = line.split(
-    /(\/\/.*$|#include|#.*$|"[^"]*"|'[^']*'|\b(?:void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|def|from|import|in|is|not|and|or|None|True|False)\b|\b\d+(?:\.\d+)?\b)/g,
+    /(\/\/.*$|\/\*.*?\*\/|#(?:include|define)|#.*$|"[^"]*"|'[^']*'|\b(?:void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL)\b|\b\d+(?:\.\d+)?\b)/g,
   );
   return tokens.map((token, i) => (
     <span
       key={i}
       className={
-        token.startsWith('//') ||
-        (token.startsWith('#') && token !== '#include')
+        token.startsWith('//') || token.startsWith('/*')
           ? 'syntax-comment'
           : token.startsWith('"') || token.startsWith("'")
             ? 'syntax-string'
-            : /^(void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|def|from|import|in|is|not|and|or|None|True|False|#include)$/.test(
+            : /^(void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|#include|#define)$/.test(
                   token,
                 )
               ? 'syntax-keyword'
@@ -43,10 +43,21 @@ export function CodePanel({
   const [status, setStatus] = useState('');
   const highlighted = useRef<HTMLDivElement>(null);
   const scrollArea = useRef<HTMLDivElement>(null);
-  const source = language === 'cpp' ? lesson.code : pythonCode[lesson.id];
-  const activeLine = language === 'cpp' ? line : pythonLineFor(lesson.id, line);
-  const languageName = language === 'cpp' ? 'C++17' : 'Python 3';
-  const extension = language === 'cpp' ? 'cpp' : 'py';
+  const source =
+    language === 'cpp'
+      ? lesson.code
+      : language === 'c'
+        ? cCode[lesson.id]
+        : pythonCode[lesson.id];
+  const activeLine =
+    language === 'cpp'
+      ? line
+      : language === 'c'
+        ? cLineFor(lesson.id, line)
+        : pythonLineFor(lesson.id, line);
+  const languageName =
+    language === 'cpp' ? 'C++17' : language === 'c' ? 'C11' : 'Python 3';
+  const extension = language === 'cpp' ? 'cpp' : language === 'c' ? 'c' : 'py';
   useEffect(() => {
     const row = highlighted.current,
       area = scrollArea.current;

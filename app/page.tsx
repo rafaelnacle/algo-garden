@@ -404,6 +404,7 @@ function Lab() {
                 aria-label="Programming language"
               >
                 <NativeSelectOption value="cpp">C++17</NativeSelectOption>
+                <NativeSelectOption value="c">C11</NativeSelectOption>
                 <NativeSelectOption value="python">Python 3</NativeSelectOption>
               </NativeSelect>
             </span>
