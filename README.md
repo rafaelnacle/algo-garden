@@ -1,6 +1,6 @@
 # AlgoGarden
 
-AlgoGarden is an interactive algorithms learning website built with React and TypeScript. It combines animated diagrams, step-by-step explanations, synchronized C++17 and Python 3 examples, and short practice questions.
+AlgoGarden is an interactive algorithms learning website built with React and TypeScript. It combines animated diagrams, step-by-step explanations, synchronized C++17, C11, and Python 3 examples, and short practice questions.
 
 ## Lessons
 
@@ -14,7 +14,7 @@ AlgoGarden is an interactive algorithms learning website built with React and Ty
 Each lesson includes:
 
 - An interactive visualization with playback, step navigation, speed control, and a timeline.
-- Equivalent C++17 and Python 3 implementations with the current operation highlighted.
+- Equivalent C++17, C11, and Python 3 implementations with the current operation highlighted.
 - Explanations of the main idea, complexity, common pitfalls, and practical uses.
 - A multiple-choice knowledge check.
 
@@ -26,6 +26,7 @@ Requirements:
 
 - Node.js 22.13.0 or later and npm.
 - Optional: `g++` with C++17 support for the C++ example checks.
+- Optional: `gcc` with C11 support for the C example checks.
 - Optional: Python 3 for the Python example checks.
 
 Install dependencies and start the Vite development server:
@@ -48,6 +49,7 @@ Open the local URL printed by Vite, normally `http://localhost:5173`.
 | `npm run lint`        | Check code with Oxlint             |
 | `npm test`            | Run algorithm and curriculum tests |
 | `npm run test:cpp`    | Compile and run all C++17 examples |
+| `npm run test:c`      | Compile and run all C11 examples   |
 | `npm run test:python` | Run all Python 3 examples          |
 | `npm run format`      | Format project files with Oxfmt    |
 
