@@ -4,11 +4,12 @@ import { Check, Copy, FileCode2 } from 'lucide-react';
 import { cCode, cLineFor } from '@/lib/algorithms/c-code';
 import { goCode, goLineFor } from '@/lib/algorithms/go-code';
 import { pythonCode, pythonLineFor } from '@/lib/algorithms/python-code';
+import { rustCode, rustLineFor } from '@/lib/algorithms/rust-code';
 import type { Lesson, ProgrammingLanguage } from '@/lib/algorithms/types';
 
 function highlight(line: string) {
   const tokens = line.split(
-    /(\/\/.*$|\/\*.*?\*\/|#(?:include|define)|#.*$|"[^"]*"|'[^']*'|\b(?:void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|package|func|var|type|range|map|make|append|len|nil|float64|uint)\b|\b\d+(?:\.\d+)?\b)/g,
+    /(\/\/.*$|\/\*.*?\*\/|#(?:include|define)|#.*$|"[^"]*"|'[^']*'|\b(?:void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|package|func|var|type|range|map|make|append|len|nil|float64|uint|fn|let|mut|impl|self|Self|pub|enum|match|Some|usize|i32|f64|Vec|Box|Option)\b|\b\d+(?:\.\d+)?\b)/g,
   );
   return tokens.map((token, i) => (
     <span
@@ -18,7 +19,7 @@ function highlight(line: string) {
           ? 'syntax-comment'
           : token.startsWith('"') || token.startsWith("'")
             ? 'syntax-string'
-            : /^(void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|package|func|var|type|range|map|make|append|len|nil|float64|uint|#include|#define)$/.test(
+            : /^(void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|package|func|var|type|range|map|make|append|len|nil|float64|uint|fn|let|mut|impl|self|Self|pub|enum|match|Some|usize|i32|f64|Vec|Box|Option|#include|#define)$/.test(
                   token,
                 )
               ? 'syntax-keyword'
@@ -71,6 +72,12 @@ export function CodePanel({
       activeLine: pythonLineFor(lesson.id, line),
       name: 'Python 3',
       extension: 'py',
+    },
+    rust: {
+      source: rustCode[lesson.id],
+      activeLine: rustLineFor(lesson.id, line),
+      name: 'Rust',
+      extension: 'rs',
     },
   };
   const {
