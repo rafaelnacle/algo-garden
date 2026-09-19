@@ -5,6 +5,7 @@ import { lessons } from '../lib/algorithms/lessons.ts';
 import { cCode, cLineFor } from '../lib/algorithms/c-code.ts';
 import { goCode, goLineFor } from '../lib/algorithms/go-code.ts';
 import { pythonCode, pythonLineFor } from '../lib/algorithms/python-code.ts';
+import { rustCode, rustLineFor } from '../lib/algorithms/rust-code.ts';
 import {
   graphEdges,
   graphNodes,
@@ -227,6 +228,16 @@ void test('every trace step maps to a valid Go source line', () => {
   }
 });
 
+void test('every trace step maps to a valid Rust source line', () => {
+  for (const lesson of lessons) {
+    const lines = rustCode[lesson.id].split('\n');
+    for (const frame of createTrace(lesson.id, [2, 1, 3])) {
+      const line = rustLineFor(lesson.id, frame.line);
+      assert.ok(line >= 1 && line <= lines.length, `${lesson.id} line ${line}`);
+    }
+  }
+});
+
 void test('important operations highlight the corresponding C statement', () => {
   const cases: [AlgorithmId, string, string][] = [
     ['bubble', 'Compare ', 'if (a[j] > a[j + 1])'],
@@ -297,6 +308,31 @@ void test('important operations highlight the corresponding Go statement', () =>
     for (const frame of frames)
       assert.ok(
         lines[goLineFor(id, frame.line) - 1].includes(statement),
+        `${id}: ${frame.message}`,
+      );
+  }
+});
+
+void test('important operations highlight the corresponding Rust statement', () => {
+  const cases: [AlgorithmId, string, string][] = [
+    ['bubble', 'Compare ', 'if a[j] > a[j + 1]'],
+    ['bubble', 'Swap the adjacent', 'a.swap(j, j + 1)'],
+    ['selection', 'Place the smallest', 'a.swap(i, minimum)'],
+    ['merge', 'Write ', 'buffer[k] ='],
+    ['quick', 'Pivot ', 'a.swap(i, hi)'],
+    ['binary', 'Found ', 'if a[mid] == target'],
+    ['dijkstra', 'Relax ', 'distance[edge.to] = next'],
+    ['astar', 'Relax ', 'distance[edge.to] = next'],
+  ];
+  for (const [id, prefix, statement] of cases) {
+    const lines = rustCode[id].split('\n');
+    const frames = createTrace(id, [1, 3, 2], 3).filter((frame) =>
+      frame.message.startsWith(prefix),
+    );
+    assert.ok(frames.length > 0, `${id} produced the expected operation`);
+    for (const frame of frames)
+      assert.ok(
+        lines[rustLineFor(id, frame.line) - 1].includes(statement),
         `${id}: ${frame.message}`,
       );
   }
