@@ -42,6 +42,7 @@ jobs:
           npm run test:c
           npm run test:go
           npm run test:python
+          npm run test:rust
 
       - name: Read GitHub Pages configuration
         id: pages
