@@ -1,6 +1,6 @@
 # AlgoGarden
 
-AlgoGarden is an interactive algorithms learning website built with React and TypeScript. It combines animated diagrams, step-by-step explanations, synchronized C++17, C11, Go, and Python 3 examples, and short practice questions.
+AlgoGarden is an interactive algorithms learning website built with React and TypeScript. It combines animated diagrams, step-by-step explanations, synchronized C++17, C11, Go, Python 3, and Rust examples, and short practice questions.
 
 ## Lessons
 
@@ -14,7 +14,7 @@ AlgoGarden is an interactive algorithms learning website built with React and Ty
 Each lesson includes:
 
 - An interactive visualization with playback, step navigation, speed control, and a timeline.
-- Equivalent C++17, C11, Go, and Python 3 implementations with the current operation highlighted.
+- Equivalent C++17, C11, Go, Python 3, and Rust implementations with the current operation highlighted.
 - Explanations of the main idea, complexity, common pitfalls, and practical uses.
 - A multiple-choice knowledge check.
 
@@ -29,6 +29,7 @@ Requirements:
 - Optional: `gcc` with C11 support for the C example checks.
 - Optional: Go for the Go example checks.
 - Optional: Python 3 for the Python example checks.
+- Optional: `rustc` and `rustfmt` for the Rust example checks.
 
 Install dependencies and start the Vite development server:
 
@@ -53,6 +54,7 @@ Open the local URL printed by Vite, normally `http://localhost:5173`.
 | `npm run test:c`      | Compile and run all C11 examples   |
 | `npm run test:go`     | Format and run all Go examples     |
 | `npm run test:python` | Run all Python 3 examples          |
+| `npm run test:rust`   | Format and run all Rust examples   |
 | `npm run format`      | Format project files with Oxfmt    |
 
 ## Technology
