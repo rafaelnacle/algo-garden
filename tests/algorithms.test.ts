@@ -3,6 +3,7 @@ import test from 'node:test';
 import { createTrace, parseValues } from '../lib/algorithms/engine.ts';
 import { lessons } from '../lib/algorithms/lessons.ts';
 import { cCode, cLineFor } from '../lib/algorithms/c-code.ts';
+import { elixirCode, elixirLineFor } from '../lib/algorithms/elixir-code.ts';
 import { goCode, goLineFor } from '../lib/algorithms/go-code.ts';
 import { pythonCode, pythonLineFor } from '../lib/algorithms/python-code.ts';
 import { rustCode, rustLineFor } from '../lib/algorithms/rust-code.ts';
@@ -19,6 +20,55 @@ const sorting: AlgorithmId[] = [
   'merge',
   'quick',
 ];
+
+void test('Elixir highlights resolve to executable lines for all trace operations', () => {
+  for (const lesson of lessons) {
+    const lines = elixirCode[lesson.id].split('\n');
+    for (const values of [[], [1], [3, 1, 2, 1]]) {
+      for (const frame of createTrace(lesson.id, values)) {
+        const line = elixirLineFor(lesson.id, frame.line);
+        assert.ok(
+          line > 1 && line <= lines.length,
+          `${lesson.id}: unmapped ${frame.line}`,
+        );
+        assert.ok(
+          lines[line - 1].trim() && !lines[line - 1].trim().startsWith('#'),
+          `${lesson.id}: ${line}`,
+        );
+      }
+    }
+  }
+});
+
+void test('important Elixir highlights match equivalent operations', () => {
+  const operations: [AlgorithmId, number, string][] = [
+    ['bubble', 8, 'when a > b'],
+    ['bubble', 9, '{[b | rest], true}'],
+    ['selection', 8, '[minimum | sort'],
+    ['insertion', 10, '[value | sorted]'],
+    ['merge', 14, '[a | merge'],
+    ['merge', 15, '[b | merge'],
+    ['quick', 10, 'sort(left) ++ [pivot'],
+    ['linear', 4, 'when value == target'],
+    ['binary', 7, 'elem(values, mid) == target'],
+    ['bfs', 13, ':queue.in(v, q)'],
+    ['dfs', 13, '[v | s]'],
+    ['dijkstra', 19, 'Map.put(d, v, next)'],
+    ['astar', 21, 'Map.put(d, v, next)'],
+    ['stack', 8, 'case pop(stack)'],
+    ['queue', 8, 'case :queue.out'],
+    ['linked', 13, 'do: tail'],
+    ['tree', 12, '[value | walk'],
+    ['hash', 8, 'put_elem(table'],
+  ];
+  for (const [id, line, statement] of operations)
+    assert.ok(
+      elixirCode[id]
+        .split('\n')
+        [elixirLineFor(id, line) - 1].includes(statement),
+      `${id}: ${line}`,
+    );
+});
 const cases = [
   [],
   [1],
