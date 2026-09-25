@@ -1,6 +1,6 @@
 # AlgoGarden
 
-AlgoGarden is an interactive algorithms learning website built with React and TypeScript. It combines animated diagrams, step-by-step explanations, synchronized C++17, C11, Go, Python 3, and Rust examples, and short practice questions.
+AlgoGarden is an interactive algorithms learning website built with React and TypeScript. It combines animated diagrams, step-by-step explanations, synchronized C++17, C11, Elixir, Go, Python 3, and Rust examples, and short practice questions.
 
 ## Lessons
 
@@ -14,11 +14,13 @@ AlgoGarden is an interactive algorithms learning website built with React and Ty
 Each lesson includes:
 
 - An interactive visualization with playback, step navigation, speed control, and a timeline.
-- Equivalent C++17, C11, Go, Python 3, and Rust implementations with the current operation highlighted.
+- Equivalent C++17, C11, Elixir, Go, Python 3, and Rust implementations with the current operation highlighted.
 - Explanations of the main idea, complexity, common pitfalls, and practical uses.
 - A multiple-choice knowledge check.
 
 Array lessons accept custom or randomized inputs. Graph lessons support selecting start and goal nodes on a fixed weighted graph. Learned lessons are saved in the browser with `localStorage`.
+
+Select Elixir from the Code menu for functional examples using immutable collections. Highlights link equivalent operations; recursion and memory costs can differ from the animation. Copy a module into an `.exs` file, add calls to its public functions, and run it with `elixir example.exs`.
 
 ## Run locally
 
@@ -27,6 +29,7 @@ Requirements:
 - Node.js 22.13.0 or later and npm.
 - Optional: `g++` with C++17 support for the C++ example checks.
 - Optional: `gcc` with C11 support for the C example checks.
+- Optional: Elixir with Erlang/OTP for the Elixir example checks.
 - Optional: Go for the Go example checks.
 - Optional: Python 3 for the Python example checks.
 - Optional: `rustc` and `rustfmt` for the Rust example checks.
@@ -42,20 +45,21 @@ Open the local URL printed by Vite, normally `http://localhost:5173`.
 
 ## Commands
 
-| Command               | Purpose                            |
-| --------------------- | ---------------------------------- |
-| `npm run dev`         | Start the Vite development server  |
-| `npm run build`       | Build the static GitHub Pages site |
-| `npm run preview`     | Preview the production build       |
-| `npm run typecheck`   | Check TypeScript                   |
-| `npm run lint`        | Check code with Oxlint             |
-| `npm test`            | Run algorithm and curriculum tests |
-| `npm run test:cpp`    | Compile and run all C++17 examples |
-| `npm run test:c`      | Compile and run all C11 examples   |
-| `npm run test:go`     | Format and run all Go examples     |
-| `npm run test:python` | Run all Python 3 examples          |
-| `npm run test:rust`   | Format and run all Rust examples   |
-| `npm run format`      | Format project files with Oxfmt    |
+| Command               | Purpose                             |
+| --------------------- | ----------------------------------- |
+| `npm run dev`         | Start the Vite development server   |
+| `npm run build`       | Build the static GitHub Pages site  |
+| `npm run preview`     | Preview the production build        |
+| `npm run typecheck`   | Check TypeScript                    |
+| `npm run lint`        | Check code with Oxlint              |
+| `npm test`            | Run algorithm and curriculum tests  |
+| `npm run test:cpp`    | Compile and run all C++17 examples  |
+| `npm run test:c`      | Compile and run all C11 examples    |
+| `npm run test:elixir` | Compile and run all Elixir examples |
+| `npm run test:go`     | Format and run all Go examples      |
+| `npm run test:python` | Run all Python 3 examples           |
+| `npm run test:rust`   | Format and run all Rust examples    |
+| `npm run format`      | Format project files with Oxfmt     |
 
 ## Technology
 
