@@ -2,12 +2,39 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, Copy, FileCode2 } from 'lucide-react';
 import { cCode, cLineFor } from '@/lib/algorithms/c-code';
+import { elixirCode, elixirLineFor } from '@/lib/algorithms/elixir-code';
 import { goCode, goLineFor } from '@/lib/algorithms/go-code';
 import { pythonCode, pythonLineFor } from '@/lib/algorithms/python-code';
 import { rustCode, rustLineFor } from '@/lib/algorithms/rust-code';
 import type { Lesson, ProgrammingLanguage } from '@/lib/algorithms/types';
 
-function highlight(line: string) {
+function highlight(line: string, language: ProgrammingLanguage) {
+  if (language === 'elixir') {
+    return line
+      .split(
+        /(#.*$|"[^"]*"|\b(?:defmodule|defp|def|do|end|fn|case|cond|when|if|else|true|false|nil|not|or|in)\b|:[a-z_]+\b|\b\d+\b)/g,
+      )
+      .map((token, i) => (
+        <span
+          key={i}
+          className={
+            token.startsWith('#')
+              ? 'syntax-comment'
+              : token.startsWith('"') || token.startsWith(':')
+                ? 'syntax-string'
+                : /^(defmodule|defp|def|do|end|fn|case|cond|when|if|else|true|false|nil|not|or|in)$/.test(
+                      token,
+                    )
+                  ? 'syntax-keyword'
+                  : /^\d+$/.test(token)
+                    ? 'syntax-number'
+                    : undefined
+          }
+        >
+          {token}
+        </span>
+      ));
+  }
   const tokens = line.split(
     /(\/\/.*$|\/\*.*?\*\/|#(?:include|define)|#.*$|"[^"]*"|'[^']*'|\b(?:void|int|bool|const|auto|if|else|for|while|return|break|continue|class|public|using|double|long|true|false|nullptr|struct|static|typedef|sizeof|def|from|import|in|is|not|and|or|None|True|False|NULL|package|func|var|type|range|map|make|append|len|nil|float64|uint|fn|let|mut|impl|self|Self|pub|enum|match|Some|usize|i32|f64|Vec|Box|Option)\b|\b\d+(?:\.\d+)?\b)/g,
   );
@@ -66,6 +93,12 @@ export function CodePanel({
       activeLine: goLineFor(lesson.id, line),
       name: 'Go',
       extension: 'go',
+    },
+    elixir: {
+      source: elixirCode[lesson.id],
+      activeLine: elixirLineFor(lesson.id, line),
+      name: 'Elixir',
+      extension: 'exs',
     },
     python: {
       source: pythonCode[lesson.id],
@@ -137,6 +170,13 @@ export function CodePanel({
         </button>
       </div>
       <div className="code-scroll" ref={scrollArea}>
+        {language === 'elixir' && (
+          <p className="text-sm text-muted-foreground px-4 py-3">
+            Elixir returns new values instead of changing collections in place.
+            Highlights show equivalent operations; recursive steps and memory
+            costs can differ from the animation.
+          </p>
+        )}
         <pre>
           <code>
             {source.split('\n').map((text, i) => (
@@ -148,7 +188,7 @@ export function CodePanel({
                 <span className="line-number" aria-hidden="true">
                   {i + 1}
                 </span>
-                <span>{highlight(text) || ' '}</span>
+                <span>{highlight(text, language) || ' '}</span>
               </div>
             ))}
           </code>

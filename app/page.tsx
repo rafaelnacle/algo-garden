@@ -405,6 +405,7 @@ function Lab() {
               >
                 <NativeSelectOption value="cpp">C++17</NativeSelectOption>
                 <NativeSelectOption value="c">C11</NativeSelectOption>
+                <NativeSelectOption value="elixir">Elixir</NativeSelectOption>
                 <NativeSelectOption value="go">Go</NativeSelectOption>
                 <NativeSelectOption value="python">Python 3</NativeSelectOption>
                 <NativeSelectOption value="rust">Rust</NativeSelectOption>
